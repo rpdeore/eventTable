@@ -1,3 +1,4 @@
+# Event table is a single page app which shows dynamic tabs and daa using Node, Express and Ajax.
 ## Developer setup
 
 - Clone repo
