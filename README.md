@@ -1,5 +1,3 @@
-# frontend-interview
-
 ## Developer setup
 
 - Clone repo
