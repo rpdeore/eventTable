@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <link rel="stylesheet" href="/stylesheets/style.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       <script src="/assets/requests.js"></script>
+       <script src="./events.js"></script>
+
+       <script>
+
+           $(document).ready(function() {
+               $("#documents a").click(function() {
+                   addTab($(this));
+               });
+
+               $('#tabs').on('click','a.tab', function() {
+
+                   $("#tabs li").removeClass("active");
+                   // show current tab
+                   $(this).parent().addClass("active");
+               });
+
+               $('#tabs').on('click','a.remove', function() {
+                   // Get the tab name
+                   var tabid = $(this).parent().find(".tab").attr("id");
+                   console.log("tabid"+tabid)
+
+                   // remove tab
+                   $(this).parent().remove();
+
+                   // if there is no current tab and if there are still tabs left, show the first one
+                   if ($("#tabs li.active").length == 0 && $("#tabs li").length > 0) {
+
+                       // find the first tab
+                       var firsttab = $("#tabs li:first-child");
+                       firsttab.addClass("active");
+
+                       // get its link name and show related content
+                       var firsttabid = $(firsttab).find("a.tab").attr("id");
+                       //$("#" + firsttabid + "_content").show();
+                   }
+               });
+           });
+           function addTab(link) {
+               // If tab already exist in the list, return
+               console.log("link"+$(link).attr("id"));
+               if ($("#" + $(link).attr("rel")).length != 0)
+                   return;
+
+               // hide other tabs
+               $("#tabs li").removeClass("active");
+
+               // add new tab
+               $("#tabs").append("<li class='active'><a class='tab' id='" +
+                   $(link).attr("id") + "' href='#'>" + $(link).html() +
+                   "</a><a href='#' class='remove'>x</a></li>");
+
+               // set the newly added tab as current
+               //$("#" + $(link).attr("id") + "_content").show();
+           }
+        </script>
+
+
+   </head>
+   <body>
+
+      <div id="main">
+         <div id="container1">
+            <div id="doclist">
+               <h2>Event Viewer</h2>
+               <ul id="documents">
+                <!--  <li><a href="#" rel="Event 1" title="This is the content of Event 1">Events Type 1</a></li> -->
+                <% for(var i=0; i<eventList.length; i++) { %>
+                  <li> <a href="", id="<%= eventList[i].id %>"> <%= eventList[i].name %></a></li>
+
+               <%  } %>
+
+               </ul>
+
+            </div>
+            <div id="wrapper">
+               <div id="rightheader">
+                  <ul id="tabs" class="tabs">
+                     <li class="active"><a class="tab" id="Event1" href="">Events Type 1</a><a href="#" class="remove" >x</a></li>
+                     <li class=""><a class="tab" id="Event2" href="">Events Type 2</a><a href="#" class="remove">x</a></li>
+                     <li class=""><a class="tab" id="Event3" href="">Events Type 3</a><a href="#" class="remove">x</a></li>
+                     <li class=""><a class="tab" id="Event4" href="">Events Type 4</a><a href="#" class="remove">x</a></li>
+                  </ul>
+               </div>
+               <div id="content">
+                  <table id="myTable">
+
+                     <!-- <script>
+                        for(var j=1; j<=30; j++)
+                        {
+                                document.write('<tr><td class="leftcolumn"><div class="rowHeader"> timestamp</div><div class="rowContent">1243123432</div></td><td class="rightcolumn"><div class="rowHeader">'
+                                               +'_raw</div><div class="rowContent">eth 000:29:4500ff00wgfjwbf095859jkhkjkj78593489032fjhgufjhgkjhhij'
+                                               +'</div></td></tr>');
+                           }
+
+                     </script> -->
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+
+   </body>
+</html>
